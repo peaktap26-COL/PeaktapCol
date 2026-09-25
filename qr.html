@@ -56,9 +56,10 @@
 
 <script>
   // ------------------------------------------------------------------
-  // CONFIGURACIÓN: pega aquí la URL /exec de tu implementación de Apps Script
+  // CONFIGURACIÓN: pega aquí la URL de tu Cloudflare Worker
+  // (ej: https://qr-proxy.tu-cuenta.workers.dev)
   // ------------------------------------------------------------------
-  const API_URL = "https://script.google.com/macros/s/AKfycbyUp5UAPLgSQkjP1mHElc0xB4ifyBacg6WhCj6rw3wOD8uGiDyxL03RylnmNFB9pd3LbQ/exec";
+  const API_URL = "https://qr-proxy.peaktap92.workers.dev/";
 
   const titleEl = document.getElementById('title');
   const msgEl = document.getElementById('message');
@@ -83,11 +84,11 @@
       return;
     }
     if (API_URL.indexOf('PEGA_AQUI') !== -1) {
-      showError('Sistema no configurado', 'Falta configurar la URL del backend en qr.html.');
+      showError('Sistema no configurado', 'Falta configurar la URL del Worker de Cloudflare en qr.html.');
       return;
     }
 
-    fetch(API_URL + '?action=resolve&id=' + encodeURIComponent(id))
+    fetch(API_URL + '?id=' + encodeURIComponent(id))
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP_' + res.status);
         return res.json();
